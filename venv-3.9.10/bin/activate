@@ -65,4 +65,4 @@ if [ -n "${BASH:-}" -o -n "${ZSH_VERSION:-}" ] ; then
     hash -r 2> /dev/null
 fi
 # ADDED TO ALLOW import pygame
-export PYTHONPATH=$HOME/src/pyball/pyball3/venv-3.9.10/lib64/python3.9/site-packages/
+export PYTHONPATH=venv-3.9.10/lib64/python3.9/site-packages/
