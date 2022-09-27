@@ -8,8 +8,8 @@ import random
 import pygame
 from pygame.locals import *
 
-if not pygame.font: print 'Warning, fonts disabled'
-if not pygame.mixer: print 'Warning, sound disabled'
+if not pygame.font: print ('Warning, fonts disabled')
+if not pygame.mixer: print ('Warning, sound disabled')
 
 def load_high_score():
     filename = 'highscore.txt'
@@ -17,7 +17,7 @@ def load_high_score():
         handle = open(filename)
         highscore = int(handle.read())
     except IOError:
-        print 'Failed to open "highscore.txt" for reading'
+        print ('Failed to open "highscore.txt" for reading')
         highscore = 0
     except ValueError:
         highscore = 0
@@ -31,7 +31,7 @@ def save_high_score(highscore):
         handle = open(filename,'w')
         handle.write(str(highscore))
     except IOError:
-        print 'Failed to open "highscore.txt" for writing'
+        print ('Failed to open "highscore.txt" for writing')
     else:
         handle.close()
 
@@ -40,12 +40,12 @@ def load_image(name, colorkey=None):
     fullname = os.path.join(name)
     try:
         image = pygame.image.load(fullname)
-    except pygame.error, message:
-        print 'Cannot load image:', fullname
-        raise SystemExit, message
+    except pygame.error as message:
+        print('Cannot load image:', fullname)
+        raise SystemExit(message)
     image = image.convert()
     if colorkey is not None:
-        if colorkey is -1:
+        if colorkey ==-1:
             colorkey = image.get_at((0,0))
         image.set_colorkey(colorkey, RLEACCEL)
     return image, image.get_rect()
@@ -53,15 +53,15 @@ def load_image(name, colorkey=None):
 def load_sound(name):
     class NoneSound:
         def play(self): 
-            print 'no sound pass'
+            print ('no sound pass')
     if not pygame.mixer or not pygame.mixer.get_init():
         return NoneSound()
     fullname = os.path.join(name)
     try:
         sound = pygame.mixer.Sound(fullname)
-    except pygame.error, message:
-        print 'Cannot load sound:', fullname
-        raise SystemExit, message
+    except pygame.error as message:
+        print ('Cannot load sound:', fullname)
+        raise SystemExit(message)
     return sound
 
 class Ball(pygame.sprite.Sprite):
@@ -75,9 +75,9 @@ class Ball(pygame.sprite.Sprite):
         hpos = random.randint(BORDERLR, width - BORDERLR)
         BORDERTB = 150
         self.height = random.randint(BORDERTB, height - BORDERTB)
-	VSPEED = [-2,-3,-4,-5,2,3,4,5]
+        VSPEED = [-2,-3,-4,-5,2,3,4,5]
         self.vspeed = random.choice(VSPEED)
-	HSPEED = [-3,-2,2,3]
+        HSPEED = [-3,-2,2,3]
         self.hspeed = random.choice(HSPEED)
         self.min = height - self.height + self.rect.bottom
         self.max = height - self.rect.bottom
@@ -219,14 +219,14 @@ def main():
                 points = 100
                 newBalls(numballs)
                 allsprites = pygame.sprite.RenderPlain((balls))
-    	        next_level(numballs,score)
+                next_level(numballs,score)
             elif event.type == KEYDOWN and event.key == K_ESCAPE:
                 score = 0
                 numballs = greeting(score)
                 points = 100
                 newBalls(numballs)
                 allsprites = pygame.sprite.RenderPlain((balls))
-    	        next_level(numballs,score)
+                next_level(numballs,score)
             elif event.type == KEYDOWN and event.key > 48 and event.key < 59:
                 keypress = event.key - 48 # K_1 == 49...K_9 == 58
                 if keypress > 0 and keypress < 10:
@@ -246,12 +246,12 @@ def main():
                     if numballs == 10:
                         draw_score(score,points,final=True)
                         numballs = greeting(score)
-                	score = 0
+                        score = 0
                     if correct == True or correct == False:
                         points = 100
                         newBalls(numballs)
                         allsprites = pygame.sprite.RenderPlain((balls))
-    		        next_level(numballs,score)
+                        next_level(numballs,score)
         draw_score(score,points)
         allsprites.update()
         screen.blit(background, (0, 0))
